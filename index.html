@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookYourShow</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: black;
+        }
+        header {
+            background-color: black;
+            border-bottom: 1px solid #ddd;
+            position: relative;
+        }
+        .top-bar, .menu-bar {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+        }
+        .top-bar {
+            justify-content: space-between;
+        }
+      .black {
+            color:yellow;
+            font-weight:bold;
+        }
+        .red {
+            color: yellow;
+        }
+        .search-bar {
+            width: 500px;
+            margin-left: 20px;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        .location, .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        .location {
+            margin-left: auto;
+            margin-right: 20px;
+            position: relative;
+        }
+        .location label {
+            cursor: pointer;
+            color:yellow;
+        }
+        .dropdown {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 1px solid #ddd;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            padding: 20px;
+        }
+        .dropdown.active {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .dropdown .search-city {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .dropdown .search-city input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        .dropdown .search-city button {
+            padding: 10px;
+            margin-left: 10px;
+            background-color: #ff3f6c;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .dropdown .cities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .dropdown .cities div {
+            flex: 1 1 calc(25% - 20px);
+            text-align: center;
+        }
+        .dropdown .cities div img {
+            width: 50px;
+            height: 50px;
+        }
+        .dropdown .cities div p {
+            margin-top: 5px;
+        }
+        .user-actions button {
+            background-color: yellow;
+            color: black;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .menu-bar {
+            justify-content: space-between;
+            background-color: black;
+            border-top: 1px solid #ddd;
+        }
+        .menu-bar nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+        .menu-bar nav ul li {
+            margin: 0 15px;
+        }
+        .menu-bar nav ul li a {
+            color: #333;
+            text-decoration: none;
+            font-size: 16px;
+            color:yellow;
+        }
+        .hero {
+            background-image: url('https://assets-in.bmscdn.com/promotions/cms/creatives/1718863192962_1240x300hyderabad.png');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            position: relative;
+            color: white;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .hero h1 {
+            background-color: black;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .recommended-movies {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 10px;
+        }
+        .recommended-movies h2 {
+            margin-bottom: 20px;
+            display: inline-block;
+	        color:yellow;
+        }
+        .recommended-movies .see-all {
+            color: yellow;
+            text-decoration: none;
+            font-size: 16px;
+            float: right;
+        }
+        .movie-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .movie {
+            flex: 1 1 calc(20% - 10px);
+            box-sizing: border-box;
+            cursor: pointer; /* Added cursor pointer for visual cue */
+        }
+       .movie img {
+               width: 100%;
+            border-radius: 5px;
+        }
+        .movie-info {
+            text-align: center;
+            margin-top: 10px;
+        }
+/* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #ccc;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-width: 400px; /* Limit the width */
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,.close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-btn {
+            background-color: #fff;
+            color: #000;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+            margin: 10px 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .modal-btn:hover {
+            background-color: #f8f8f8;
+        }
+
+        .modal-btn.google {
+            border-color: #4285f4;
+        }
+
+        .modal-btn.email {
+            border-color: #ccc;
+        }
+
+        .modal-btn.apple {
+            border-color: #000;
+        }
+
+        .modal-btn.mobile {
+            border-color: #ccc;
+        }
+
+        .modal-btn img {
+            margin-right: 10px;
+        }
+
+        .modal p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .modal p a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .modal p a:hover {
+            text-decoration: underline;
+        }
+        .mobile-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .mobile-number .flag {
+            margin-right: 10px;
+        }
+
+        .mobile-number .code {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .mobile-number input {
+            border: none;
+            outline: none;
+            flex-grow: 1;
+        }
+        .he{
+            margin-left:50px;
+
+        }
+
+        .para {
+            font-size: 15px;
+            margin-left:50px;
+        }
+        .he1{
+            margin-left:50px;
+            padding-top:20px;
+        }
+
+        .para1{
+            font-size: 15px;
+            margin-left:50px;
+            padding-bottom:20px;
+        }
+        .container {
+            width: 100%;
+            padding: 20px;
+        }
+       
+        .footer {
+            margin-top: 20px;
+            background-color: grey;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+      
+    </style>
+</head>
+<body>
+    <header>
+        <div class="top-bar">
+            <div>
+                <span class="red">Pick</span><span class="black">Your</span><span class="red">Seat</span>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search for Movies, Events, Plays, Sports and Activities">
+            </div>
+            <div class="location">
+                <label for="city" id="locationLabel" onclick="toggleDropdown()">Location</label>
+                <div class="dropdown" id="locationDropdown">
+                    <div class="search-city">
+                        <input type="text" placeholder="Search for your city">
+                    </div>
+                    <div class="search-city">
+                        <button id="detectLocationBtn" onclick="detectLocation()">Detect my location</button>
+                    </div>
+                    <div class="cities">
+                        <div>
+                            <img src="https://in.bmscdn.com/m6/images/common-modules/regions/mumbai-selected.png" alt="Mumbai">
+                            <p>Mumbai</p>
+                        </div>
+                        <div>
+                            <img src="https://in.bmscdn.com/m6/images/common-modules/regions/ncr.png" alt="Delhi">
+                            <p>Delhi-NCR</p>
+                        </div>
+                        <div>
+                            <img src="https://in.bmscdn.com/m6/images/common-modules/regions/bang.png" alt="Bengaluru">
+                            <p>Bengaluru</p>
+                        </div>
+                        <div>
+                            <img src="https://in.bmscdn.com/m6/images/common-modules/regions/hyd.png" alt="Hyderabad">
+                            <p>Hyderabad</p>
+                        </div>
+                        <div>
+                            <img src="https://in.bmscdn.com/m6/images/common-modules/regions/ahd.png" alt="Ahmedabad">
+                            <p>Ahmedabad</p>
+                        </div>
+                        <div>
+                            <img src="https://in.bmscdn.com/m6/images/common-modules/regions/chd.png" alt="Chandigarh">
+                            <p>Chandigarh</p>
+                        </div>
+                        <div>
+                            <img src="https://in.bmscdn.com/m6/images/common-modules/regions/chen.png" alt="Chennai">
+                            <p>Chennai</p>
+                        </div>
+                        <div>
+                            <img src="https://in.bmscdn.com/m6/images/common-modules/regions/pune.png" alt="Pune">
+                            <p>Pune</p>
+                        </div>
+                        <div>
+                            <img src="https://in.bmscdn.com/m6/images/common-modules/regions/kolk.png" alt="Kolkata">
+                            <p>Kolkata</p>
+                        </div>
+                        <div>
+                            <img src="https://in.bmscdn.com/m6/images/common-modules/regions/koch.png" alt="Kochi">
+                            <p>Kochi</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="user-actions">
+                <button>Sign in</button>
+            </div>
+        </div>
+        <div class="menu-bar">
+            <nav>
+                <ul>
+                    <li><a href="#">Movies</a></li>
+                    <li><a href="#">Stream</a></li>
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">Plays</a></li>
+                    <li><a href="#">Sports</a></li>
+                    <li><a href="#">Activities</a></li>
+                </ul>
+            </nav>
+            <nav>
+                <ul>
+                    <li><a href="#">List Your Show</a></li>
+                    <li><a href="#">Corporates</a></li>
+                    <li><a href="#">Offers</a></li>
+                    <li><a href="#">Gift Cards</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="hero">
+    </div>
+    <div class="recommended-movies">
+        <h2>Recommended Movies</h2>
+        <a href="#" class="see-all">See All</a>
+        <div class="movie-grid">
+            <div class="movie" onclick="window.location.href='paradise.html';">
+                <img src="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:l-image,i-discovery-catalog@@icons@@star-icon-202203010609.png,lx-24,ly-615,w-29,l-end:l-text,ie-OS4zLzEwICA2OTUgVm90ZXM%3D,fs-29,co-FFFFFF,ly-612,lx-70,pa-8_0_0_0,l-end/et00401459-psqzgtddzj-portrait.jpg" alt="Paradise">
+            </div>
+            <div class="movie" onclick="window.location.href='chandu-champion.html';">
+                <img src="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:l-image,i-discovery-catalog@@icons@@star-icon-202203010609.png,lx-24,ly-615,w-29,l-end:l-text,ie-OS4yLzEwICA1NS40SyBWb3Rlcw%3D%3D,fs-29,co-FFFFFF,ly-612,lx-70,pa-8_0_0_0,l-end/et00363650-tlyjxxawja-portrait.jpg" alt="Chandu Champion">
+            </div>
+            <div class="movie" onclick="window.location.href='kalki-289-ab.html';">
+                <img src="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:l-image,i-discovery-catalog@@icons@@star-icon-202203010609.png,lx-24,ly-615,w-29,l-end:l-text,ie-OS4xLzEwICAzMTkuNEsgVm90ZXM%3D,fs-29,co-FFFFFF,ly-612,lx-70,pa-8_0_0_0,l-end/et00352941-qdafpgypxr-portrait.jpg" alt="Kalki 289 AB">
+            </div>
+            <div class="movie" onclick="window.location.href='maharaja.html';">
+                <img src="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:l-image,i-discovery-catalog@@icons@@star-icon-202203010609.png,lx-24,ly-615,w-29,l-end:l-text,ie-OS4uLzEwICA5MC4ySyBWb3Rlcw%3D%3D,fs-29,co-FFFFFF,ly-612,lx-70,pa-8_0_0_0,l-end/et00399737-rugjxpdsuy-portrait.jpg" alt="Maharaja">
+            </div>
+            <div class="movie" onclick="window.location.href='a-quiet-place-day-one.html';">
+                <img src="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:l-image,i-discovery-catalog@@icons@@star-icon-202203010609.png,lx-24,ly-615,w-29,l-end:l-text,ie-Ni42LzEwICAxLjdLIFZvdGVz,fs-29,co-FFFFFF,ly-612,lx-70,pa-8_0_0_0,l-end/et00390813-gexewexzur-portrait.jpg" alt="A Quiet Place: Day One">
+            </div>
+        </div>
+    </div>
+ <div class="recommended-movies">
+        <h2>Premiers</h2>
+        <a href="#" class="see-all">See All</a>
+        <div class="movie-grid">
+            <div class="movie" onclick="window.location.href='">
+                <img src="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:l-image,i-discovery-catalog@@icons@@bms_premiere_v1.png,t-false,lfo-bottom_left,l-end/et00397274-vbdkfxuqbw-portrait.jpg" alt="">
+            </div>
+            <div class="movie" onclick="window.location.href='">
+                <img src="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:l-image,i-discovery-catalog@@icons@@bms_premiere_v1.png,t-false,lfo-bottom_left,l-end/et00401089-zpryxpzdyd-portrait.jpg" alt="">
+            </div>
+            <div class="movie" onclick="window.location.href='">
+                <img src="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:l-image,i-discovery-catalog@@icons@@bms_premiere_v1.png,t-false,lfo-bottom_left,l-end/et00392294-dkwxkqxymg-portrait.jpg" alt="">
+            </div>
+            <div class="movie" onclick="window.location.href='">
+                <img src="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:l-image,i-discovery-catalog@@icons@@bms_premiere_v1.png,t-false,lfo-bottom_left,l-end/et00395053-lajpwjaclt-portrait.jpg" alt="">
+            </div>
+            <div class="movie" onclick="window.location.href='">
+                <img src="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:l-image,i-discovery-catalog@@icons@@bms_premiere_v1.png,t-false,lfo-bottom_left,l-end/et00402543-rvryfknfsv-portrait.jpg" alt="">
+            </div>
+        </div>
+    </div>
+ <div class="recommended-movies">
+        <h2>Your Music Studio</h2>
+        <a href="#" class="see-all">See All</a>
+        <div class="movie-grid">
+            <div class="movie" onclick="window.location.href='">
+                <img src="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:l-text,ie-RnJpLCA4IE5vdg%3D%3D,fs-29,co-FFFFFF,ly-612,lx-24,pa-8_0_0_0,l-end/et00401642-nsltbuprtl-portrait.jpg" alt="">
+            </div>
+            <div class="movie" onclick="window.location.href='">
+                <img src="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:l-text,ie-U3VuLCAyMCBPY3Q%3D,fs-29,co-FFFFFF,ly-612,lx-24,pa-8_0_0_0,l-end/et00394924-exzjunhzwh-portrait.jpg" alt="">
+            </div>
+            <div class="movie" onclick="window.location.href='">
+                <img src="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:l-text,ie-RnJpLCAxOSBKdWw%3D,fs-29,co-FFFFFF,ly-612,lx-24,pa-8_0_0_0,l-end/et00401023-fnqppwgjzs-portrait.jpg" alt="">
+            </div>
+            <div class="movie" onclick="window.location.href='geethamadhuri.html'">
+                <img src="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:l-text,ie-RnJpLCAxMiBKdWw%3D,fs-29,co-FFFFFF,ly-612,lx-24,pa-8_0_0_0,l-end/et00401602-vdyumcjjbx-portrait.jpg" alt="">
+            </div>
+            <div class="movie" onclick="window.location.href='">
+                <img src="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:l-text,ie-U2F0LCAyMCBKdWw%3D,fs-29,co-FFFFFF,ly-612,lx-24,pa-8_0_0_0,l-end/et00401082-cypugldqwv-portrait.jpg" alt="">
+            </div>
+        </div>
+    </div>
+
+
+<!-- Sign-In Modal -->
+<!-- Sign-In Modal -->
+<div id="signInModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <h2>Get Started</h2>
+        <button class="modal-btn google"><img src="google.jpg" alt="Google Logo" width="20"> Continue with Google</button>
+        <button class="modal-btn email"><img src="email.jpg">Continue with Email</button>
+        <button class="modal-btn apple"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple Logo" width="20"> Continue with Apple</button>
+        <p>OR</p>
+        <div class="mobile-number">
+            <span class="flag"><img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="India Flag" width="20"></span>
+            <span class="code">+91</span>
+            <input type="text" placeholder="Continue with mobile number">
+        </div>
+        <p>
+            I agree to the <a href="#">Terms & Conditions</a> & <a href="#">Privacy Policy</a>
+        </p>
+    </div>
+</div>
+ <div class="footer">
+        <div>
+            <h5 class="he1">MOVIES NOW SHOWING IN HYDERABAD</h5>
+            <p class="para">Kalki 2898 AD | Maharaja | A Quiet Place - Day One | Chandhu Champion</p>
+        </div>
+        <div>
+            <h5 class="he">UPCOMING MOVIES IN HYDERABAD</h5>
+            <p class="para">Kill Dooensh | Bispill Basic Ocean | Hardal | Kagadadi | Sita Sangharas</p>
+        </div>
+        <div>
+            <h5 class="he">MOVIES BY GENRE</h5>
+            <p class="para">Comedy Movies | Drama Movies | Action Movies | Romantic Movies | Thriller Movies</p>
+        </div>
+        <div>
+            <h5 class="he">MOVIES BY LANGUAGE</h5>
+            <p class="para">Movies in English | Movies in Hindi | Movies in Telugu | Movies in Tamil</p>
+        </div>
+        <div>
+            <h5 class="he">SPORTS EVENTS IN HYDERABAD</h5>
+            <p class="para">Running | Archery | Athletics | Badminton | Basketball | Baseball</p>
+        </div>
+        <div>
+            <h5 class="he">EVENTS IN TOP CITIES</h5>
+            <p class="para1">Events in Mumbai | Events in Hyderabad | Events in Chennai | Events in Delhi-NCR | Events in Kolkata</p>
+        </div>
+       
+    </div>
+
+    <script>
+        function toggleDropdown() {
+            const dropdown = document.getElementById('locationDropdown');
+            dropdown.classList.toggle('active');
+            if (dropdown.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+
+        function detectLocation() {
+            alert('Detecting location...');
+        }
+
+        // Add event listener to each city item in the dropdown
+        const cities = document.querySelectorAll('.cities div');
+        cities.forEach(city => {
+            city.addEventListener('click', function() {
+                const cityName = city.querySelector('p').textContent;
+                document.getElementById('locationLabel').textContent = cityName;
+                const dropdown = document.getElementById('locationDropdown');
+                dropdown.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Other script for modal and button actions
+        document.querySelector('.user-actions button').addEventListener('click', function() {
+            document.getElementById('signInModal').style.display = 'block';
+        });
+
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('signInModal').style.display = 'none';
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target == document.getElementById('signInModal')) {
+                document.getElementById('signInModal').style.display = 'none';
+            }
+        });
+
+   
+    </script>
+</body>
+</html>

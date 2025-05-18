@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geetha Madhuri Live</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .header {
+            position: relative;
+        }
+        .header img {
+            width: 100%;
+        }
+        .header .event-details {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: #fff;
+        }
+        .event-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .event-info .info {
+            flex: 1;
+        }
+        .event-info .book {
+            flex: 0 0 100px;
+        }
+        .book button {
+            background-color: #ff5252;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .book button:hover {
+            background-color: #e04848;
+        }
+        .event-info .info p {
+            margin: 5px 0;
+        }
+        .additional-info {
+            display: flex;
+            margin-top: 20px;
+        }
+        .left-side, .right-side, .middle-side {
+            flex: 1;
+            padding: 0 10px;
+        }
+        .middle-side {
+            flex: 2;
+            padding: 0 20px;
+        }
+        .musician, .share, .map {
+            margin-top: 20px;
+        }
+        .musician img {
+            border-radius: 50%;
+            width: 100px;
+        }
+        .musician, .share {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .share ul {
+            list-style: none;
+            padding: 0;
+        }
+        .share ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://assets-in.bmscdn.com/nmcms/events/banner/desktop/media-desktop-geetha-madhuri-live-0-2024-6-15-t-5-18-45.jpg" alt="Geetha Madhuri Live">
+            <div class="event-details">
+                <h1>Geetha Madhuri Live</h1>
+                <p>Regional | Telugu | 21yrs + | 4hrs</p>
+                <p>Fri 12 Jul 2024 at 8:00 PM | Odeum By Prism: Hyderabad | ₹ 599 onwards</p>
+            </div>
+        </div>
+        <div class="event-info">
+            <div class="info">
+                <p><strong>Musician:</strong> Geetha Madhuri</p>
+                <p><strong>Location:</strong> Odeum By Prism: Hyderabad</p>
+            </div>
+            <div class="book">
+                <button id="bookButton">Book</button>
+            </div>
+        </div>
+        <div class="additional-info">
+            <div class="left-side">
+                <div class="musician">
+                    <img src="https://in.bmscdn.com/Artist/geetha-madhuri-38945-1712033375.jpg" alt="Geetha Madhuri">
+                    <p>Geetha Madhuri</p>
+                </div>
+                <div class="share">
+                    <h2>Share this event</h2>
+                    <ul>
+                        <li><img src="facebook_icon.png" alt="Facebook" width="30"></li>
+                        <li><img src="twitter_icon.png" alt="Twitter" width="30"></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="middle-side">
+                <div class="interested">
+                    <p>176 People have shown interest recently</p>
+                    <button>Interested?</button>
+                </div>
+                <div class="reason">
+                    <h2>Why should you attend?</h2>
+                    <ul>
+                        <li>Geetha Madhuri's first ever club gig</li>
+                        <li>You cannot miss her performing live on stage</li>
+                    </ul>
+                </div>
+                <div class="about">
+                    <h2>About</h2>
+                    <p>Get ready for an electrifying night with Geetha Madhuri live in concert! Known for her mesmerizing voice and dynamic stage presence, Geetha Madhuri will be performing live in Hyderabad. This is your chance to witness one of the most talented singers in the Telugu music industry as she belts out your favorite hits.</p>
+                </div>
+                <div class="location">
+                    <h2>Location</h2>
+                    <p>Odeum By Prism: Hyderabad</p>
+                    <p>Survey 236/1P, Financial District, Vattinagulapally Gowlidoddi, Hyderabad, Telangana 500032, India</p>
+                </div>
+            </div>
+            <div class="right-side">
+                <div class="map">
+                    <h2>Map</h2>
+                   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.8271576531474!2d78.3258143742103!3d17.420080501864394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb93b0e3fc20cd%3A0x8f45e2f47aa1600e!2sOdeum%20By%20Prism!5e0!3m2!1sen!2sin!4v1720234838243!5m2!1sen!2sin" width="100" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('bookButton').addEventListener('click', function() {
+            window.location.href = 'booking.html'; // Change to the correct path if different
+        });
+    </script>
+</body>
+</html>

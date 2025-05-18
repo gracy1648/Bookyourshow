@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: grey;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .payment-container {
+            background-color: black;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+	        color:white;
+        }
+        h1 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+        p {
+            margin-bottom: 20px;
+            color: #666;
+        }
+        .payment-button {
+            padding: 10px 20px;
+            background-color: yellow;
+            color: black;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <h1>Confirm Payment</h1>
+        <p>Please proceed to pay for your selected seats.</p>
+        <button class="payment-button">Pay Now</button>
+        <form action="payment.php" method="POST" enctype="multipart/form-data" >
+        <label 
+        
+    </div>
+
+    <script>
+        // Implement payment processing logic here
+        document.querySelector('.payment-button').addEventListener('click', function() {
+            alert('Payment Successful!');
+            // Redirect to home page or confirmation page
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Options | BookMyShow</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 30px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .header img {
+            height: 40px;
+            margin-bottom: 20px;
+        }
+        .ticket-options h2 {
+            margin-bottom: 20px;
+        }
+        .ticket-options {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        .ticket-info {
+            background-color: #f0f8ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .ticket-info h3 {
+            margin-top: 0;
+        }
+        .summary {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .summary h3 {
+            margin-top: 0;
+        }
+        .summary p {
+            margin: 5px 0;
+        }
+        .total {
+            font-weight: bold;
+        }
+        .proceed-button {
+            text-align: right;
+            margin-top: 20px;
+        }
+        .proceed-button button {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://in.bookmyshow.com/Assets/images/bookmyshow-logo.svg" alt="BookMyShow Logo">
+        </div>
+        <div class="ticket-options">
+            <h2>Please select from the following option(s)</h2>
+            <div class="ticket-info">
+                <input type="radio" id="mticket" name="ticket-option" checked>
+                <label for="mticket">
+                    <h3>M-Ticket</h3>
+                    <p>Login & save the planet. Use your phone as a ticket.</p>
+                </label>
+                <div class="m-ticket-info">
+                    <p>1. Customer(s) can access their ticket(s) from the 'My Profile' section on the app/mobile-web.</p>
+                    <p>2. It is mandatory to present the ticket(s) in my profile section via app/mobile-web at the venue.</p>
+                    <p>3. No physical ticket(s) are required to enter the venue.</p>
+                </div>
+            </div>
+        </div>
+        <div class="summary">
+            <h3>Geetha Madhuri Live</h3>
+            <p>1 Ticket</p>
+            <p><strong>Date:</strong> Fri, 12 Jul, 2024</p>
+            <p><strong>Time:</strong> 08:00 PM</p>
+            <p><strong>Venue:</strong> Odeum By Prism: Hyderabad</p>
+            <p><strong>Category:</strong> EB FEMALE ENTRY(599): 1 ticket(s)</p>
+            <p><strong>Sub-total:</strong> ₹599.00</p>
+            <p><strong>Booking Fee:</strong> ₹49.47</p>
+            <p class="total"><strong>Total Amount:</strong> ₹648.47</p>
+        </div>
+        <div class="proceed-button">
+            <button onclick="window.location.href='payment.html'"> Proceed to Payement</button>
+        </div>
+    </div>
+</body>
+</html>
