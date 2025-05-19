@@ -1,2 +1,2 @@
 # BookyourShow
-Html,css,Bootstrap.Xammp
+Html,css,Bootstrap,Xammp
